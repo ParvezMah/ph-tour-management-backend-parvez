@@ -25,6 +25,7 @@ const startServer = async()=>{
     }
 }
 
+// IIFE
 (async () => {
     await startServer()
     await seedSuperAdmin()
