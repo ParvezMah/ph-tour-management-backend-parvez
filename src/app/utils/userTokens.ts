@@ -24,6 +24,7 @@ export const createUserTokens = (user: Partial<IUser>)=> {
 
 export const createNewAccessTokenWithRefreshToken = async (refreshToken: string) => {
 
+    // newly typed
     const verifiedRefreshToken = verifyToken(refreshToken, envVars.JWT_REFRESH_SECRET) as JwtPayload
 
 
