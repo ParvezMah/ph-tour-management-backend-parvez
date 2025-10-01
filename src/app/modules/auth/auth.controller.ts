@@ -23,7 +23,9 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
 
 const getNewAccessToken = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     // const refreshToken = req.cookies.refreshToken;
+
     const refreshToken = req.headers.authorization;
+
     console.log("refreshToken : ", refreshToken)
     if (!refreshToken) {
         throw new AppError(httpStatus.BAD_REQUEST, "No refresh token recieved from cookies")
