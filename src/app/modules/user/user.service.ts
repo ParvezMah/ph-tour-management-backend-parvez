@@ -47,7 +47,6 @@ const updateUser = async (userId: string, payload: Partial<IUser>, decodedToken:
      * 
      * promoting to superadmin - superadmin
      */
-
     if (payload.role) {
         if (decodedToken.role === Role.USER || decodedToken.role === Role.GUIDE) {
             throw new AppError(httpStatus.FORBIDDEN, "You are not authorized");
@@ -75,6 +74,7 @@ const updateUser = async (userId: string, payload: Partial<IUser>, decodedToken:
 
 const getAllUsers = async ()=> {
     const users = await User.find({});
+
 
     const totalUsers = await User.countDocuments();
 
