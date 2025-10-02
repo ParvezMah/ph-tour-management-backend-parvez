@@ -15,20 +15,30 @@ import passport from "passport"
 
 
 const credentialsLogin = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // Authentication using jwt
     // const loginInfo = await AuthServices.credentialsLogin(req.body)
 
+    // Authenticate using passport local strategy
     passport.authenticate("local", async (err: any, user: any, info: any)=>{
 
-        if (err) {
+           if (err) {
+
+            // ❌❌❌❌❌
             // throw new AppError(401, "Some error")
             // next(err)
-            return new AppError(401, err)
+            // return new AppError(401, err)
+
+
+            // ✅✅✅✅
+            // return next(err)
+            console.log("from err");
+            return next(new AppError(401, err))
         }
 
         if (!user) {
-            // console.log("from !user");
-            return new AppError(401, info.message)
-
+            console.log("from !user");
+            // return new AppError(401, info.message)
+            return next(new AppError(401, info.message))
         }
 
         const userTokens = await createUserTokens(user)
@@ -60,16 +70,6 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
     //     httpOnly: true, // httpOnly: true This makes the cookie inaccessible to JavaScript running in the browser (it can't be read or modified by document.cookie). Purpose: Helps protect against XSS (Cross-Site Scripting) attacks.
     //     secure: false, // secure: false This means the cookie will be sent over both HTTP and HTTPS connections. Purpose: In development, you often use secure: false because you may not have HTTPS locally. In production, you should set secure: true so the cookie is only sent over HTTPS, making it more secure.
     // })
-
-    setAuthCookie(res, loginInfo)
-
-
-    sendResponse(res, {
-        success: true,
-        statusCode: httpStatus.OK,
-        message: "User Logged In Successfully",
-        data: loginInfo,
-    })
 })
 
 
