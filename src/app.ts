@@ -4,10 +4,18 @@ import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import notFound from './app/middleware/notFound';
 import { router } from './app/routes';
 import cookieParser from "cookie-parser";
+import passport from "passport";
+import expressSession from "express-session";
 
 const app = express();
 
-
+app.use(expressSession({ // Use express-session middleware before passport.session()
+    secret: "Your secret",
+    resave: false,
+    saveUninitialized: false,
+})); 
+app.use(passport.initialize()); // Initialize Passport middleware
+app.use(passport.session()); // If using sessions, initialize session support
 app.use(cookieParser()) // to read cookies sent by the client in your request handlers
 app.use(express.json());
 app.use(cors());
