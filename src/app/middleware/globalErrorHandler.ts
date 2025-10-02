@@ -28,6 +28,16 @@ export const globalErrorHandler = (err: any, req:Request, res:Response, next:Nex
         statusCode = 400;
         message = "Invalid MongoDB ObjectId. Please provide a valid Id"
     }
+    // Zod error
+    else if (err.name === "ZodError") {
+        statusCode = 400;
+        message = "Zod Error Occurred"
+        console.log(err.issues);
+        err.issues.forEach((issue : any) => errorSource.push({
+            path: issue.path[issue.path.length - 1],
+            message: issue.message
+        }))
+    }
     // Validation error
     else if (err.name === "ValidationError") {
         statusCode = 400;
@@ -52,7 +62,7 @@ export const globalErrorHandler = (err: any, req:Request, res:Response, next:Nex
         success: false,
         message,
         errorSource,
-        // err,
+        err,
         stack: envVars.NODE_ENV === "development" ? err.stack : null
     })
 }
