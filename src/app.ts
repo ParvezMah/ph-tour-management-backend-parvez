@@ -10,9 +10,9 @@ import expressSession from "express-session";
 const app = express();
 
 app.use(expressSession({ // Use express-session middleware before passport.session()
-    secret: "Your secret",
-    resave: false,
-    saveUninitialized: false,
+    secret: "Your secret", // Used to sign the session ID cookie
+    resave: false, // Don’t save session if unmodified
+    saveUninitialized: false, // Don’t create session until something stored
 })); 
 app.use(passport.initialize()); // Initialize Passport middleware
 app.use(passport.session()); // If using sessions, initialize session support
