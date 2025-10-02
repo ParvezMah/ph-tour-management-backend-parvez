@@ -93,6 +93,7 @@ const logout = catchAsync(async (req: Request, res: Response, next: NextFunction
 //     "name": "JsonWebTokenError",
 //     "message": "jwt malformed"
 // },
+
 const resetPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
     const newPassword = req.body.newPassword;

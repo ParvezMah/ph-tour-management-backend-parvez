@@ -7,11 +7,12 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import expressSession from "express-session";
 import "./app/config/passport" // to run the passport config file
+import { envVars } from "./app/config/env";
 
 const app = express();
 
 app.use(expressSession({ // Use express-session middleware before passport.session()
-    secret: "Your secret", // Used to sign the session ID cookie
+    secret: envVars.EXPRESS_SESSION_SECRET, // Used to sign the session ID cookie
     resave: false, // Don’t save session if unmodified
     saveUninitialized: false, // Don’t create session until something stored
 })); 
