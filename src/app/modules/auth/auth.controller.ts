@@ -9,11 +9,14 @@ import { AuthServices } from "./auth.service"
 import { createUserTokens } from "../../utils/userTokens"
 import { envVars } from "../../config/env"
 import { JwtPayload } from "jsonwebtoken"
+import passport from "passport"
 
 
 
 const credentialsLogin = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const loginInfo = await AuthServices.credentialsLogin(req.body)
+    // const loginInfo = await AuthServices.credentialsLogin(req.body)
+
+    passport.authenticate();
 
     // res.cookie("accessToken", loginInfo.accessToken, {
     //     httpOnly: true, // httpOnly: true This makes the cookie inaccessible to JavaScript running in the browser (it can't be read or modified by document.cookie). Purpose: Helps protect against XSS (Cross-Site Scripting) attacks.
