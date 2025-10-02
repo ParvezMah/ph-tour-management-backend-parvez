@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express"
 import httpStatus from "http-status-codes"
+import AppError from "../../errorHelpers/appError"
 import { catchAsync } from "../../utils/catchAsync"
 import { sendResponse } from "../../utils/sendResponse"
-import { AuthServices } from "./auth.service"
-import AppError from "../../errorHelpers/appError"
 import { setAuthCookie } from "../../utils/setAuthCookie"
+import { AuthServices } from "./auth.service"
 
 
 
@@ -38,6 +38,7 @@ const getNewAccessToken = catchAsync(async (req: Request, res: Response, next: N
     const refreshToken = req.cookies.refreshToken;
 
     // const refreshToken = req.headers.authorization;
+    // console.log(refreshToken)
 
     if (!refreshToken) {
         throw new AppError(httpStatus.BAD_REQUEST, "There is No refresh token recieved from cookies")
@@ -50,7 +51,7 @@ const getNewAccessToken = catchAsync(async (req: Request, res: Response, next: N
     // })
 
 
-        setAuthCookie(res, tokenInfo);
+    setAuthCookie(res, tokenInfo);
 
     sendResponse(res, {
         success: true,
@@ -81,8 +82,25 @@ const logout = catchAsync(async (req: Request, res: Response, next: NextFunction
     })
 })
 
+const resetPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+
+    const newPassword = req.body.newPassword;
+    const oldPassword = req.body.oldPassword;
+    const decodedToken = req.user
+
+    await AuthServices.resetPassword(oldPassword, newPassword, decodedToken);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Password Changed Successfully",
+        data: null,
+    })
+})
+
 export const AuthControllers = {
     credentialsLogin,
     getNewAccessToken,
-    logout
+    logout,
+    resetPassword
 }
