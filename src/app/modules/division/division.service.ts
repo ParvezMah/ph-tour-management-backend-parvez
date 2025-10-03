@@ -1,6 +1,15 @@
 import { IDivision } from "./division.interface";
 import { Division } from "./division.model";
 
+
+
+// "success": false,
+// "message": "Zod Error",
+// "errorSources": [
+//     {
+//         "message": "Invalid input: expected object, received undefined"
+//     }
+
 const createDivision = async (payload: IDivision) => {
 
     const existingDivision = await Division.findOne({ name: payload.name });
