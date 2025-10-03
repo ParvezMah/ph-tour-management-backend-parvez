@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IDivision } from "./divishion.interface";
+import { IDivision } from "./division.interface";
 
 
 const divisionSchema = new Schema<IDivision>({
