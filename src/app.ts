@@ -10,16 +10,17 @@ import "./app/config/passport" // to run the passport config file
 import { envVars } from "./app/config/env";
 
 const app = express();
+app.use(express.json());
 
 app.use(expressSession({ // Use express-session middleware before passport.session()
     secret: envVars.EXPRESS_SESSION_SECRET, // Used to sign the session ID cookie
     resave: false, // Don’t save session if unmodified
     saveUninitialized: false, // Don’t create session until something stored
 })); 
+app.use(cookieParser()) // to read cookies sent by the client in your request handlers
 app.use(passport.initialize()); // Initialize Passport middleware
 app.use(passport.session()); // If using sessions, initialize session support
-app.use(cookieParser()) // to read cookies sent by the client in your request handlers
-app.use(express.json());
+
 app.use(cors());
 
 
