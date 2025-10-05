@@ -48,6 +48,7 @@ tourSchema.pre("save", async function (next) {
         while (await Tour.exists({ slug })) {
             slug = `${slug}-${counter++}` // dhaka-division-2
         }
+        console.log("Tour slug : ", slug)
 
         this.slug = slug;
     }
