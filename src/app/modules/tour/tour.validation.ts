@@ -42,3 +42,6 @@ export const updateTourZodSchema = z.object({
 export const createTourTypeZodSchema = z.object({
     name: z.string(),
 });
+
+
+// 30-12 Module Summary
