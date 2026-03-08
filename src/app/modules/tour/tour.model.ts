@@ -22,7 +22,7 @@ const tourSchema = new Schema<ITour>({
     excluded: { type: [String], default: [] },
     amenities: { type: [String], default: [] },
     tourPlan: { type: [String], default: [] },
-    maxGuest: { type: Number },
+    maxGuest: { type: Number },  
     minAge: { type: Number },
     division: {
         type: Schema.Types.ObjectId,
@@ -38,6 +38,7 @@ const tourSchema = new Schema<ITour>({
     timestamps: true
 })
 
+// for dynamic slug
 tourSchema.pre("save", async function (next) {
 
     if (this.isModified("title")) {
@@ -55,6 +56,8 @@ tourSchema.pre("save", async function (next) {
     next()
 })
 
+
+// for dynamic slug
 tourSchema.pre("findOneAndUpdate", async function (next) {
     const tour = this.getUpdate() as Partial<ITour>
 

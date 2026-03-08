@@ -11,6 +11,7 @@ const divisionSchema = new Schema<IDivision>({
     timestamps: true
 })
 
+// for dynamic slug
 divisionSchema.pre("save", async function (next) {
     if (this.isModified("name")) {
         const baseSlug = this.name.toLowerCase().split(" ").join("-")
@@ -26,6 +27,8 @@ divisionSchema.pre("save", async function (next) {
     next()
 })
 
+
+// for dynamic slug
 divisionSchema.pre("findOneAndUpdate", async function (next) {
     const division = this.getUpdate() as Partial<IDivision>
 
