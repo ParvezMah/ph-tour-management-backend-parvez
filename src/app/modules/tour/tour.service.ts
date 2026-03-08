@@ -107,6 +107,7 @@ const getAllTours = async (query: Record<string, string>) => {
         .sort()
         .fields()
         .paginate()
+        
 
     // const meta = await queryBuilder.getMeta()
 
