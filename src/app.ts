@@ -18,9 +18,19 @@ app.use(expressSession({ // Use express-session middleware before passport.sessi
 })); 
 app.use(passport.initialize()); // Initialize Passport middleware
 app.use(passport.session()); // If using sessions, initialize session support
+
+
+
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+}))
 app.use(cookieParser()) // to read cookies sent by the client in your request handlers
 app.use(express.json());
-app.use(cors());
+
+
+
 
 
 
