@@ -11,46 +11,44 @@ import { envVars } from "./app/config/env";
 
 const app = express();
 
-app.use(expressSession({ // Use express-session middleware before passport.session()
-    secret: envVars.EXPRESS_SESSION_SECRET, // Used to sign the session ID cookie
-    resave: false, // Don’t save session if unmodified
-    saveUninitialized: false, // Don’t create session until something stored
-})); 
-app.use(passport.initialize()); // Initialize Passport middleware
-app.use(passport.session()); // If using sessions, initialize session support
+// ================= Payment Webhook or Cron jobs =================
 
-
-
+// ================= Cors at First ( When you add backend) =================
 app.use(cors({
     origin: "http://localhost:3000",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
 }))
+
+// ================= JSON + Cookies Parsing =================
 app.use(cookieParser()) // to read cookies sent by the client in your request handlers
 app.use(express.json());
 
+// ================= Session =================
+app.use(expressSession({ // Use express-session middleware before passport.session()
+    secret: envVars.EXPRESS_SESSION_SECRET, // Used to sign the session ID cookie
+    resave: false, // Don’t save session if unmodified
+    saveUninitialized: false, // Don’t create session until something stored
+})); 
 
+// ================= Passport =================
+app.use(passport.initialize()); // Initialize Passport middleware
+app.use(passport.session()); // If using sessions, initialize session support
 
-
-
-
+// ================= App Routes =================
 app.use("/api/v1", router);
 
-
-
-
+// ================= Health Routes =================
 app.get("/", (req:Request, res:Response)=>{
     res.status(200).json({
         message: "Welcome to Tour Management System Backend"
     })
 })
 
-
-// Global Error Handler
+// ================= Global Error Handler =================
 app.use(globalErrorHandler);
 
-
-// Route Not Found
+// ================= 404 Route =================
 app.use(notFound)
 
 
